@@ -42844,7 +42844,19 @@ async function run() {
         if (fieldList.length) {
             fieldList.forEach(addFields);
         } else {
-            data['attachments'][0]['blocks'].pop();
+            data = {
+                channel: channel,
+                blocks: [
+                    {
+                        type: "section",
+                        text: {
+                            type: "mrkdwn",
+                            text: message,
+                            hell: "abcd"
+                        }
+                    }
+                ]
+            }
         }
         
         const options = {
@@ -42871,7 +42883,7 @@ async function run() {
                 console.log("response.statusText: " + response.statusText);
                 return core.setFailed(error);
             }
-        })
+        });
     } catch (error) {
         core.setFailed(error.message);
     }
