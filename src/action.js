@@ -54,8 +54,7 @@ async function run() {
                         type: "section",
                         text: {
                             type: "mrkdwn",
-                            text: message,
-                            hell: "abcd"
+                            text: message
                         }
                     }
                 ]
@@ -73,13 +72,12 @@ async function run() {
             },
             json: data
         };
-        console.log(JSON.stringify(data, null, 2));
         request.post(options, function (error, response, body) {
             if (!error && response.statusCode === 200 && body.ok) {
                 console.log("Success!");
-                console.log(body);
             }
             else {
+                console.log(JSON.stringify(data, null, 2));
                 console.log("Failed!");
                 console.log("error: " + error);
                 console.log("response.statusCode: " + response.statusCode);
