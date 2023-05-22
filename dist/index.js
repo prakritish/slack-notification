@@ -42844,7 +42844,7 @@ async function run() {
         if (fieldList.length) {
             fieldList.forEach(addFields);
         } else {
-            delete data['attachments'][0]['blocks'][1];
+            data['attachments'][0]['blocks'].pop();
         }
         
         const options = {
@@ -42860,7 +42860,7 @@ async function run() {
         };
         console.log(JSON.stringify(data, null, 2));
         request.post(options, function (error, response, body) {
-            if (!error && response.statusCode === 200) {
+            if (!error && response.statusCode === 200 && body.ok) {
                 console.log("Success!");
                 console.log(body);
             }
