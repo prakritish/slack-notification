@@ -42799,79 +42799,83 @@ const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const request = __nccwpck_require__(8699);
 
-try {
-    const pass = 'PASS';
-    const fail = 'FAIL';
-    const pass_color = '#009933';
-    const fail_color = '#e63900';
-    const url = 'https://slack.com/api/chat.postMessage';
-    const slackToken = core.getInput('slack_token');
-    const channel = core.getInput('channel');
-    const message = core.getInput('message');
-    const result = core.getInput('result');
-    const fields = core.getInput('fields');
-    if (result.localeCompare(pass, 'en', {sensitivity: 'base'}) === 0) {
-        color = pass_color
-    } else if (result.localeCompare(fail, 'en', {sensitivity: 'base'}) === 0) {
-        color = fail_color
-    }
-    data = {
-        channel: channel,
-        attachments: [
-            {
-                blocks: [
-                    {
-                        type: "section",
-                        text: {
-                            type: "mrkdwn",
-                            text: message
+const pass = 'PASS';
+const fail = 'FAIL';
+const pass_color = '#009933';
+const fail_color = '#e63900';
+const url = 'https://slack.com/api/chat.postMessage';
+
+async function run() {
+    try {
+        const slackToken = core.getInput('slack_token');
+        const channel = core.getInput('channel');
+        const message = core.getInput('message');
+        const result = core.getInput('result');
+        const fields = core.getInput('fields');
+        if (result.localeCompare(pass, 'en', {sensitivity: 'base'}) === 0) {
+            color = pass_color
+        } else if (result.localeCompare(fail, 'en', {sensitivity: 'base'}) === 0) {
+            color = fail_color
+        }
+        data = {
+            channel: channel,
+            attachments: [
+                {
+                    blocks: [
+                        {
+                            type: "section",
+                            text: {
+                                type: "mrkdwn",
+                                text: message
+                            }
+                        },
+                        {
+                            type: "section",
+                            fields: []
                         }
-                    },
-                    {
-                        type: "section",
-                        fields: []
-                    }
-                ]
+                    ]
+                }
+            ]
+        }
+        if (result) {
+            data['attachments'][0]['color'] = color
+        }
+        const fieldList = fields.split(/\r?\n/).filter(Boolean);
+        if (fieldList.length) {
+            fieldList.forEach(addFields);
+        } else {
+            delete data['attachments'][0]['blocks'][1];
+        }
+        
+        const options = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            auth: {
+                bearer: slackToken
+            },
+            json: data
+        };
+        request.post(options, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                console.log(body)
             }
-        ]
+            else {
+                console.log(JSON.stringify(data, null, 2));
+                console.log("error: " + error)
+                console.log("response.statusCode: " + response.statusCode)
+                console.log("response.statusText: " + response.statusText)
+                return core.setFailed(error)
+            }
+        })
+    } catch (error) {
+        core.setFailed(error.message);
     }
-    if (result) {
-        data['attachments'][0]['color'] = color
-    }
-    const fieldList = fields.split(/\r?\n/).filter(Boolean);
-    if (fieldList.length) {
-        fieldList.forEach(addFields);
-    } else {
-        delete data['attachments'][0]['blocks'][1];
-    }
-    
-    const options = {
-        url: url,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-        },
-        auth: {
-            bearer: slackToken
-        },
-        json: data
-    };
-    request.post(options, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            console.log(body)
-        }
-        else {
-            console.log("error: " + error)
-            console.log("response.statusCode: " + response.statusCode)
-            console.log("response.statusText: " + response.statusText)
-            core.setFailed(error)
-        }
-    })
-} catch (error) {
-    core.setFailed(error.message);
 }
 
-function addFields(line) {
+async function addFields(line) {
     const field = line.split(/:(.*)/).filter(Boolean)
     const fieldValue = {
         type: "mrkdwn",
@@ -42879,6 +42883,8 @@ function addFields(line) {
     }
     data['attachments'][0]['blocks'][1]['fields'].push(fieldValue)
 }
+
+run()
 
 })();
 
