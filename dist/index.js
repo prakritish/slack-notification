@@ -42810,9 +42810,9 @@ try {
     const message = core.getInput('message');
     const result = core.getInput('result');
     const fields = core.getInput('fields');
-    if (result.localeCompare(pass, 'en', {sensitivity: 'base'})) {
+    if (result.localeCompare(pass, 'en', {sensitivity: 'base'}) === 0) {
         color = pass_color
-    } else if (result.localeCompare(fail, 'en', {sensitivity: 'base'})) {
+    } else if (result.localeCompare(fail, 'en', {sensitivity: 'base'}) === 0) {
         color = fail_color
     }
     data = {
