@@ -1,0 +1,20 @@
+{
+  "name": "slack-notify",
+  "version": "1.0.0",
+  "description": "Notify via Slack",
+  "main": "index.js",
+  "repository": "https://github.com/prakritish/slack-notify.git",
+  "author": "Prakritish Sen Eshore",
+  "license": "GPL",
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.1"
+  },
+  "scripts": {
+    "build": "ncc build src/action.js -o dist"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "request": "^2.88.2"
+  }
+}

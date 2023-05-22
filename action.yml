@@ -1,0 +1,23 @@
+# action.yml
+name: 'Slack Notifier'
+description: 'Send Slack Notification to given Channel'
+inputs:
+  slack_token:
+    description: "Slack Bot Token"
+    required: true
+  channel:
+    description: "Slack Channel ID"
+    required: true
+  message:
+    description: 'Message'
+    required: true
+  result:
+    description: "PASS / FAIL"
+    required: false
+  fields:
+    description: "Text Fields"
+    required: true
+  
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
