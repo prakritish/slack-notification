@@ -93,11 +93,8 @@ async function run() {
 async function addFields(line) {
     const field = line.split(/:(.*)/).filter(Boolean)
     const fieldValue = {
-        // type: "mrkdwn",
-        // text: "*" + field[0] + "*\n" + field[1]
-        title: field[0],
-        value: field[1],
-        short: false
+        type: "mrkdwn",
+        text: "*" + field[0] + "*\n" + field[1]
     }
     data['attachments'][0]['blocks'][1]['fields'].push(fieldValue)
 }
