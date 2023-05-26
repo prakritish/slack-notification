@@ -8,6 +8,9 @@ inputs:
   channel:
     description: "Slack Channel ID"
     required: true
+  username:
+    description: "User Name to Display on the Slack Message"
+    required: false
   message:
     description: 'Message'
     required: true
