@@ -1,0 +1,41 @@
+name: Pull Request
+
+on:
+    pull_request:
+        branches: ['main']
+
+jobs:
+    build:
+        name: Build
+        runs-on: ['ubuntu-latest']
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Install packages
+              run: |
+                yarn
+            - name: Build
+              run: |
+                yarn build
+
+    test:
+        name: Test
+        runs-on: ['ubuntu-latest']
+        needs: ['build']
+        if: always()
+        steps:
+            - uses: actions/checkout@v4
+            - name: Send Slack Message
+              id: message
+              uses: prakritish/slack-notification@main
+              with:
+                slack_token: ${{ secrets.SLACK_TOKEN }}
+                channel: 'C5BCPQFUL'
+                result: ${{ needs.build.result }}
+                message: "Build Result for Pull Request ${{ github.event.pull_request.url }}"
+                fields: |
+                    Job URL:${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+                    Build Result: ${{ needs.build.result }}
+                    Head (Source) Branch: ${{ github.head_ref }}
+                    Base (Target) Branch: ${{ github.base_ref }}
+

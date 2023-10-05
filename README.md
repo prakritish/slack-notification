@@ -1,1 +1,1 @@
-# slack-notify
+# slack-notification
