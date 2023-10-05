@@ -26,9 +26,14 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Send Slack Message
+              id: message
               uses: prakritish/slack-notification@main
               with:
                 slack_token: ${{ secrets.SLACK_TOKEN }}
                 channel: 'D04CSFAT3R8'
                 result: ${{ needs.build.result }}
                 message: "The build ${{ needs.build.result }}"
+            - name: Message
+              if: always()
+              run: |
+                echo "Test Result: ${{ steps.message.result }}"

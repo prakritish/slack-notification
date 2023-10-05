@@ -4,6 +4,8 @@ const request = require('request');
 
 const pass = 'PASS';
 const fail = 'FAIL';
+const success = 'success'
+const failure = 'failure'
 const pass_color = '#009933';
 const fail_color = '#e63900';
 const url = 'https://slack.com/api/chat.postMessage';
@@ -15,9 +17,9 @@ async function run() {
         const message = core.getInput('message');
         const result = core.getInput('result');
         const fields = core.getInput('fields');
-        if (result.localeCompare(pass, 'en', {sensitivity: 'base'}) === 0) {
+        if (result.localeCompare(pass, 'en', {sensitivity: 'base'}) === 0 || result.localeCompare(success, 'en', {sensitivity: 'base'}) === 0) {
             color = pass_color
-        } else if (result.localeCompare(fail, 'en', {sensitivity: 'base'}) === 0) {
+        } else if (result.localeCompare(fail, 'en', {sensitivity: 'base'}) === 0 || result.localeCompare(failure, 'en', {sensitivity: 'base'}) === 0) {
             color = fail_color
         }
         username = core.getInput('username');
@@ -45,7 +47,7 @@ async function run() {
                 }
             ]
         }
-        if (result) {
+        if (color) {
             data['attachments'][0]['color'] = color
         }
         const fieldList = fields.split(/\r?\n/).filter(Boolean);
