@@ -23,7 +23,7 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Send Slack Message
-              uses: prakritish/slack-notification@main
+              uses: prakritish/slack-notification@v1
               with:
                 slack_token: ${{ secrets.SLACK_TOKEN }}
                 channel: 'C5BCPQFUL'
