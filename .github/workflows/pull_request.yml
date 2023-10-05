@@ -34,5 +34,5 @@ jobs:
                 result: ${{ needs.build.result }}
                 message: "Build Result: ${{ needs.build.result }}"
                 fields: |
-                    **Job URL**:${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+                    Job URL:${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
