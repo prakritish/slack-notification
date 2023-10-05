@@ -42817,8 +42817,13 @@ async function run() {
         } else if (result.localeCompare(fail, 'en', {sensitivity: 'base'}) === 0) {
             color = fail_color
         }
+        username = core.getInput('username');
+        if (!username) {
+            username = "Github Action";
+        }
         data = {
             channel: channel,
+            username: username,
             attachments: [
                 {
                     blocks: [
