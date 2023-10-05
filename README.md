@@ -40,7 +40,7 @@ The Bot Token should have the following scopes:
 example:
 ```
     - name: Send Slack Message
-        uses: prakritish/slack-notification@v1
+        uses: prakritish/slack-notification@v2
         with:
             slack_token: ${{ secrets.SLACK_TOKEN }}
             channel: 'C5BCPQFUL'

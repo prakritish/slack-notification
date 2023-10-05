@@ -26,7 +26,6 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Send Slack Message
-              id: message
               uses: prakritish/slack-notification@v1
               env:
                 GITHUB_CONTEXT: ${{ toJson(github) }}
