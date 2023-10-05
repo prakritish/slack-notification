@@ -1,5 +1,6 @@
 # action.yml
-name: 'Slack Notifier'
+name: 'Slack Notification'
+author: Prakritish Sen Eshore
 description: 'Send Slack Notification to given Channel'
 inputs:
   slack_token:
@@ -24,3 +25,7 @@ inputs:
 runs:
   using: 'node16'
   main: 'dist/index.js'
+
+branding:
+  icon: 'inbox'
+  color: 'green'
