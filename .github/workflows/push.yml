@@ -23,12 +23,12 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Send Slack Message
-              uses: prakritish/slack-notification@main
+              uses: prakritish/slack-notification@v1
               with:
                 slack_token: ${{ secrets.SLACK_TOKEN }}
                 channel: 'C5BCPQFUL'
                 result: ${{ needs.build.result }}
-                message: "Build Result for merging ${{ github.ref_name }} to main"
+                message: "Build Result for main branch"
                 fields: |
                     Job URL:${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
                     Build Result: ${{ needs.build.result }}
