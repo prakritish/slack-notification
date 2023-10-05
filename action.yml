@@ -1,5 +1,5 @@
 # action.yml
-name: 'Slack Notifications'
+name: 'Slack Bot Notifier'
 author: Prakritish Sen Eshore
 description: 'Send Slack Notification to given Channel'
 inputs:
