@@ -32,7 +32,8 @@ jobs:
                 slack_token: ${{ secrets.SLACK_TOKEN }}
                 channel: 'C5BCPQFUL'
                 result: ${{ needs.build.result }}
-                message: "Build Result: ${{ needs.build.result }}"
+                message: "Build Result for ${{ github.event.pull_request.number }}"
                 fields: |
                     Job URL:${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+                    Build Result: ${{ needs.build.result }}
 
