@@ -30,7 +30,7 @@ jobs:
               uses: prakritish/slack-notification@workflow_01
               with:
                 slack_token: ${{ secrets.SLACK_TOKEN }}
-                channel: 'D04CSFAT3R8'
+                channel: 'C5BCPQFUL'
                 result: ${{ needs.build.result }}
                 message: "The build ${{ needs.build.result }}"
             - name: Message
