@@ -1,0 +1,16 @@
+load("//:bzl/ncc.bzl", "ncc")
+
+filegroup(
+    name = "action_src",
+    srcs = ["action.js"],
+    visibility = ["//visibility:public"],
+)
+
+ncc(
+    name = "build",
+    src = "//src:action_src",
+    out = "dist",
+    build_dir = "src",
+    command = "build",
+)
+
