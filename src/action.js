@@ -73,7 +73,7 @@ async function run() {
                 ]
             };
         }
-
+        console.log("Posting message to Slack:", JSON.stringify(data, null, 2));
         const response = await slack.chat.postMessage(data);
 
         if (!response.ok) {
